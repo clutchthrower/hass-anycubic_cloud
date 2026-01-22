@@ -99,6 +99,9 @@ export interface HomeAssistant {
       };
     };
   };
+  config: {
+    time_zone: string;
+  };
   callApi: <T>(
     method: "GET" | "POST" | "PUT" | "DELETE",
     path: string,
@@ -369,7 +372,7 @@ export interface HassPanel {
 }
 
 export interface PageChangeDetail {
-  item: Element;
+  name: string;
 }
 
 export interface ModalEventBase {

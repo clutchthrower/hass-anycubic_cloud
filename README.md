@@ -1,3 +1,5 @@
+> **This integration has been forked to get it back up and running.  Successfully tested on a Kobra S1 Combo.  It also resolves a few issues still present in the initial integration like timezones, tabs not clicking, error 500, etc.  Kudos to @WaresWichall for this amazing integration**</span>
+> 
 > [!NOTE]  
 > Anycubic have been attempting to block MQTT access, see [here](https://github.com/WaresWichall/hass-anycubic_cloud/issues/33)
 > 
@@ -76,6 +78,14 @@ Current features:
 7. Select your printer, then you're good to go!
 8. Optionally configure more options in the home assistant integration `configure` menus.
 
+### Sensors
+
+Sensor entities are created automatically for each printer once the
+integration has been set up. These cover printer state, job progress and ACE
+metrics. You can use them in dashboards or automations like any other Home
+Assistant entity. When MQTT is enabled, updates are delivered in real time;
+otherwise values are refreshed every minute via the cloud API.
+
 
 ### Slicer authentication
 
@@ -118,11 +128,6 @@ Current features:
 If you log yourself out or your token expires you'll get a re-authentication warning in Home Assistant, just grab a new token as above.
 
 
-## Donations
+## Contributing
 
-<a href="https://www.buymeacoffee.com/wareswichall"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=☕&slug=wareswichall&button_colour=28303f&font_colour=ffffff&font_family=Lato&outline_colour=ffffff&coffee_colour=FFDD00" /></a>
-
-
-## Thanks
-
-Thanks to @dangreco for his original work on threedy which I first modded and then completely rewrote with Lit instead of React.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines, including the preferred commit message style.

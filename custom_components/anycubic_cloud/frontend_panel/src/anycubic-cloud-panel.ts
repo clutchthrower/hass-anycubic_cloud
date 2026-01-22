@@ -156,34 +156,41 @@ export class AnycubicCloudPanel extends LitElement {
     return html`
       <div class="header">
         ${this.renderToolbar()}
-        <ha-tabs
-          scrollable
-          attr-for-selected="page-name"
-          .selected=${this.selectedPage}
-          @iron-activate=${this.handlePageSelected}
-        >
-          <paper-tab page-name="main"> ${this._tabMain} </paper-tab>
-          <paper-tab page-name="local-files">
+        <sl-tab-group @sl-tab-show=${this.handlePageSelected}>
+          <sl-tab slot="nav" id="panel-tab-main" panel="main">
+            ${this._tabMain}
+          </sl-tab>
+          <sl-tab slot="nav" id="panel-tab-local-files" panel="local-files">
             ${this._tabFilesLocal}
-          </paper-tab>
-          <paper-tab page-name="udisk-files">
+          </sl-tab>
+          <sl-tab slot="nav" id="panel-tab-udisk-files" panel="udisk-files">
             ${this._tabFilesUdisk}
-          </paper-tab>
-          <paper-tab page-name="cloud-files">
+          </sl-tab>
+          <sl-tab slot="nav" id="panel-tab-cloud-files" panel="cloud-files">
             ${this._tabFilesCloud}
-          </paper-tab>
-          <paper-tab page-name="print-no_cloud_save">
+          </sl-tab>
+          <sl-tab
+            slot="nav"
+            id="panel-tab-print-no_cloud_save"
+            panel="print-no_cloud_save"
+          >
             ${this._tabPrintNoSave}
-          </paper-tab>
-          <paper-tab page-name="print-save_in_cloud">
+          </sl-tab>
+          <sl-tab
+            slot="nav"
+            id="panel-tab-print-save_in_cloud"
+            panel="print-save_in_cloud"
+          >
             ${this._tabPrintSave}
-          </paper-tab>
+          </sl-tab>
           ${DEBUG // eslint-disable-line @typescript-eslint/no-unnecessary-condition
             ? html`
-                <paper-tab page-name="debug"> ${this._tabDebug} </paper-tab>
+                <sl-tab slot="nav" id="panel-tab-debug" panel="debug">
+                  ${this._tabDebug}
+                </sl-tab>
               `
             : null}
-        </ha-tabs>
+        </sl-tab-group>
       </div>
       <div class="view">${this.getView(this.route)}</div>
     `;
@@ -339,11 +346,11 @@ export class AnycubicCloudPanel extends LitElement {
   };
 
   handlePageSelected = (ev: HASSDomEvent<PageChangeDetail>): void => {
-    const newPage = ev.detail.item.getAttribute("page-name") as string;
-    if (newPage !== getPage(this.route)) {
+    const newPage = ev.detail.name;
+    if (newPage && newPage !== getPage(this.route)) {
       navigateToPage(this, newPage);
       this.requestUpdate();
-    } else {
+    } else if (newPage) {
       scrollTo(0, 0);
     }
   };
@@ -358,6 +365,9 @@ export class AnycubicCloudPanel extends LitElement {
         background-color: var(--app-header-background-color);
         color: var(--app-header-text-color, white);
         border-bottom: var(--app-header-border-bottom, none);
+        position: relative;
+        z-index: 1;
+        margin-top: var(--header-height);
       }
       .toolbar {
         height: var(--header-height);
@@ -373,7 +383,7 @@ export class AnycubicCloudPanel extends LitElement {
         line-height: 20px;
         flex-grow: 1;
       }
-      ha-tabs {
+      sl-tab-group {
         margin-left: max(env(safe-area-inset-left), 24px);
         margin-right: max(env(safe-area-inset-right), 24px);
         --paper-tabs-selection-bar-color: var(
@@ -381,6 +391,14 @@ export class AnycubicCloudPanel extends LitElement {
           var(--app-header-text-color, #fff)
         );
         text-transform: uppercase;
+      }
+
+      sl-tab::part(base) {
+        color: var(--app-header-text-color, #fff);
+      }
+
+      sl-tab[active]::part(base) {
+        color: var(--app-header-text-color, #fff);
       }
 
       .version {

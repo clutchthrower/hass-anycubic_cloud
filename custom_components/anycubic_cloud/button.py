@@ -10,6 +10,10 @@ from homeassistant.const import EntityCategory, Platform
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
+# Camera control button icons
+ICON_CAM_START = "mdi:video-plus"
+ICON_CAM_STOP = "mdi:video-off"
+
 from .const import (
     COORDINATOR,
     DOMAIN,
@@ -91,6 +95,23 @@ BUTTON_TYPES: list[AnycubicButtonEntityDescription] = list([
     ),
 ])
 
+CAMERA_BUTTON_TYPES: list[AnycubicButtonEntityDescription] = [
+    AnycubicButtonEntityDescription(
+        key="start_camera",
+        translation_key="start_camera",
+        icon=ICON_CAM_START,
+        printer_entity_type=PrinterEntityType.PRINTER,
+        requires_peripheral_camera=False,
+    ),
+    AnycubicButtonEntityDescription(
+        key="stop_camera",
+        translation_key="stop_camera",
+        icon=ICON_CAM_STOP,
+        printer_entity_type=PrinterEntityType.PRINTER,
+        requires_peripheral_camera=False,
+    ),
+]
+
 GLOBAL_BUTTON_TYPES: list[AnycubicButtonEntityDescription] = list([
     AnycubicButtonEntityDescription(
         key="request_file_list_cloud",
@@ -127,6 +148,7 @@ async def async_setup_entry(
             + SECONDARY_MULTI_COLOR_BOX_BUTTON_TYPES
             + PRIMARY_DRYING_PRESET_BUTTON_TYPES
             + SECONDARY_DRYING_PRESET_BUTTON_TYPES
+            + CAMERA_BUTTON_TYPES
             + GLOBAL_BUTTON_TYPES
         ),
     )
@@ -162,3 +184,5 @@ class AnycubicCloudButton(AnycubicCloudEntity, ButtonEntity):
             return attrib
         else:
             return None
+
+

@@ -290,27 +290,26 @@ export class AnycubicPrintercardConfigure extends LitElement {
   private _renderMenu(): LitTemplateResult {
     return html`
       <div class="header">
-        <ha-tabs
-          scrollable
-          attr-for-selected="page-name"
-          .selected=${this.configPage}
-          @iron-activate=${this._handlePageSelected}
-        >
-          <paper-tab page-name="main">${this._tabMain}</paper-tab>
-          <paper-tab page-name="stats">${this._tabStats}</paper-tab>
+        <sl-tab-group @sl-tab-show=${this._handlePageSelected}>
+          <sl-tab slot="nav" id="config-tab-main" panel="main"
+            >${this._tabMain}</sl-tab
+          >
+          <sl-tab slot="nav" id="config-tab-stats" panel="stats"
+            >${this._tabStats}</sl-tab
+          >
           ${this.hasColorbox
-            ? html`<paper-tab page-name="colours">
+            ? html`<sl-tab slot="nav" id="config-tab-colours" panel="colours">
                 ${this._tabColours}
-              </paper-tab>`
+              </sl-tab>`
             : nothing}
-        </ha-tabs>
+        </sl-tab-group>
       </div>
     `;
   }
 
   private _handlePageSelected = (ev: HASSDomEvent<PageChangeDetail>): void => {
-    const newPage = ev.detail.item.getAttribute("page-name") as string;
-    if (newPage !== this.configPage) {
+    const newPage = ev.detail.name;
+    if (newPage && newPage !== this.configPage) {
       this.configPage = newPage;
     }
   };
@@ -489,13 +488,24 @@ export class AnycubicPrintercardConfigure extends LitElement {
 
       .header {
         color: var(--primary-text-color);
+        position: relative;
+        z-index: 1;
+        margin-top: var(--header-height);
       }
 
-      ha-tabs {
+      sl-tab-group {
         margin-left: max(env(safe-area-inset-left), 24px);
         margin-right: max(env(safe-area-inset-right), 24px);
         --paper-tabs-selection-bar-color: var(--primary-color);
         text-transform: uppercase;
+      }
+
+      sl-tab::part(base) {
+        color: var(--primary-text-color);
+      }
+
+      sl-tab[active]::part(base) {
+        color: var(--primary-text-color);
       }
 
       .ac-printer-card-configure-conf {
