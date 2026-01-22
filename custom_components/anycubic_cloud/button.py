@@ -10,10 +10,6 @@ from homeassistant.const import EntityCategory, Platform
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
-# Camera control button icons
-ICON_CAM_START = "mdi:video-plus"
-ICON_CAM_STOP = "mdi:video-off"
-
 from .const import (
     COORDINATOR,
     DOMAIN,
@@ -26,6 +22,11 @@ from .helpers import printer_attributes_for_key
 
 if TYPE_CHECKING:
     from .coordinator import AnycubicCloudDataUpdateCoordinator
+
+
+# Camera control button icons
+ICON_CAM_START = "mdi:video-plus"
+ICON_CAM_STOP = "mdi:video-off"
 
 
 @dataclass(frozen=True)
@@ -184,5 +185,3 @@ class AnycubicCloudButton(AnycubicCloudEntity, ButtonEntity):
             return attrib
         else:
             return None
-
-

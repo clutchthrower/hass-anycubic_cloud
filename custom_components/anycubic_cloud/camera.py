@@ -23,6 +23,8 @@ from .const import (
 from .coordinator import AnycubicCloudDataUpdateCoordinator
 from .entity import AnycubicCloudEntity, AnycubicCloudEntityDescription
 
+AnycubicCameraEntityDescription = AnycubicCloudEntityDescription
+
 if TYPE_CHECKING:
     from .anycubic_cloud_api.data_models.orders import AnycubicCameraToken
     from .anycubic_cloud_api.data_models.printer import AnycubicPrinter

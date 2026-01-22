@@ -7,6 +7,7 @@ from typing import Any
 from ..anycubic_cloud_api.anycubic_api import AnycubicMQTTAPI as _AnycubicAPI
 from ..anycubic_cloud_api.data_models.orders import AnycubicBaseOrderRequest
 
+
 class AnycubicCloudAPI(_AnycubicAPI):
     """Wrapper exposing simplified async_send_order."""
 

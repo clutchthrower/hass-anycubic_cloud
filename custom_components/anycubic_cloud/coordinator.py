@@ -66,7 +66,6 @@ from .helpers import (
     check_descriptor_state_ace_not_supported,
     check_descriptor_state_ace_primary_unavailable,
     check_descriptor_state_ace_secondary_unavailable,
-    check_descriptor_state_camera_unavailable,
     check_descriptor_state_drying_unavailable,
     check_descriptor_status_not_fdm,
     check_descriptor_status_not_lcd,

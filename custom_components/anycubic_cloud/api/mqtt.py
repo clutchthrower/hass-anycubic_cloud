@@ -16,4 +16,3 @@ class AnycubicMQTTAPI(AnycubicBaseAPI):
     async def async_send_order(self, order_id: int, device_id: str | None = None):
         """Delegate to underlying Cloud API for order calls."""
         return await super().async_send_order(order_id, device_id=device_id)
-
