@@ -413,4 +413,3 @@ class AnycubicMQTTAPI(AnycubicAPIFunctions):
                     self._mqtt_client.unsubscribe(sub)
 
             del self._mqtt_subscribed_printers[printer.key]
-            

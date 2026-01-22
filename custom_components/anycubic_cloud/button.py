@@ -185,4 +185,3 @@ class AnycubicCloudButton(AnycubicCloudEntity, ButtonEntity):
             return attrib
         else:
             return None
-            
