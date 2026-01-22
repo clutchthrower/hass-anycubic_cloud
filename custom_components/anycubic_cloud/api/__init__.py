@@ -11,6 +11,10 @@ from ..anycubic_cloud_api.data_models.orders import AnycubicBaseOrderRequest
 class AnycubicCloudAPI(_AnycubicAPI):
     """Wrapper exposing simplified async_send_order."""
 
-    async def async_send_order(self, order_id: int, device_id: int) -> Any:
+    async def async_send_order(
+        self,
+        order_id: int,
+        device_id: int | None = None,
+    ) -> dict[str, Any]:
         request = AnycubicBaseOrderRequest(order_id=order_id, printer_id=device_id)
         return await self._send_anycubic_order(order_request=request, raw_data=True)

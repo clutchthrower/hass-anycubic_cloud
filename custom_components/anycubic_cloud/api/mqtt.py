@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from typing import Any
+
 from ..anycubic_cloud_api.anycubic_api import AnycubicMQTTAPI as AnycubicBaseAPI
 
 
@@ -13,6 +15,10 @@ class AnycubicMQTTAPI(AnycubicBaseAPI):
     # Cloud HTTP API.  Provide a passthrough so callers don’t care
     # which API variant they’re holding.
     # ------------------------------------------------------------------
-    async def async_send_order(self, order_id: int, device_id: str | None = None):
+    async def async_send_order(
+        self,
+        order_id: int,
+        device_id: int | None = None,
+    ) -> str | None | dict[str, Any]:
         """Delegate to underlying Cloud API for order calls."""
         return await super().async_send_order(order_id, device_id=device_id)

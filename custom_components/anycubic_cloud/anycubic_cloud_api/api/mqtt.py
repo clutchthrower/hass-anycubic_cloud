@@ -50,7 +50,11 @@ class AnycubicMQTTAPI(AnycubicAPIFunctions):
     # send the order via MQTT; instead delegate to the Cloud HTTP API the
     # integration already uses for slice uploads, etc.
     # ---------------------------------------------------------------------
-    async def async_send_order(self, order_id: int, device_id: str | None = None):
+    async def async_send_order(
+        self,
+        order_id: int,
+        device_id: int | None = None,
+    ) -> str | None | dict[str, Any]:
         """Forward Anycubic 'order' (1001 camera open, 1002 camera close, ...)
         to the underlying Cloud API so callers don't care which API mode
         (HTTP-only vs MQTT) the integration is running in."""

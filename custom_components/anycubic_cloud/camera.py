@@ -4,10 +4,10 @@ from __future__ import annotations
 
 import logging
 from datetime import datetime, timedelta
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, cast
 
-import boto3
-from botocore.exceptions import BotoCoreError, ClientError
+import boto3  # type: ignore[import-untyped]
+from botocore.exceptions import BotoCoreError, ClientError  # type: ignore[import-untyped]
 from homeassistant.components.camera import Camera
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import Platform
@@ -71,11 +71,14 @@ def _get_stream_url(token: AnycubicCameraToken) -> str | None:
         aws_secret_access_key=token.secret_key,
         aws_session_token=token.session_token,
     )
-    return kav.get_hls_streaming_session_url(
-        StreamName=stream_name,
-        PlaybackMode="LIVE",
-        DiscontinuityMode="ALWAYS",
-    )["HLSStreamingSessionURL"]
+    return cast(
+        str,
+        kav.get_hls_streaming_session_url(
+            StreamName=stream_name,
+            PlaybackMode="LIVE",
+            DiscontinuityMode="ALWAYS",
+        )["HLSStreamingSessionURL"],
+    )
 
 
 def _get_snapshot(token: AnycubicCameraToken) -> bytes | None:
@@ -117,7 +120,7 @@ def _get_snapshot(token: AnycubicCameraToken) -> bytes | None:
     ).get("Images") or []
     if not images:
         return None
-    return images[0].get("ImageContent")
+    return cast(bytes | None, images[0].get("ImageContent"))
 
 
 async def async_setup_entry(
@@ -162,7 +165,7 @@ class AnycubicCloudCamera(AnycubicCloudEntity, Camera):
 
         self._stream_url: str | None = None
         self._token: AnycubicCameraToken | None = None
-        self._refresh_coordinator: DataUpdateCoordinator | None = None
+        self._refresh_coordinator: DataUpdateCoordinator[None] | None = None
 
         printer = self.coordinator.get_printer_for_id(printer_id)
         if printer:
@@ -171,7 +174,7 @@ class AnycubicCloudCamera(AnycubicCloudEntity, Camera):
 
     async def async_added_to_hass(self) -> None:
         await self._refresh()
-        self._refresh_coordinator = DataUpdateCoordinator(
+        self._refresh_coordinator = DataUpdateCoordinator[None](
             self.hass,
             _LOGGER,
             name="anycubic_camera_refresh",

@@ -822,6 +822,27 @@ class AnycubicAPIFunctions(AnycubicAPIBase):
     # WIP Unused ORDER Functions
     # ------------------------------------------
 
+    @overload
+    async def _send_anycubic_camera_open_order(
+        self,
+        printer: AnycubicPrinter,
+        raw_data: Literal[True],
+    ) -> dict[str, Any]: ...
+
+    @overload
+    async def _send_anycubic_camera_open_order(
+        self,
+        printer: AnycubicPrinter,
+        raw_data: Literal[False] = ...,
+    ) -> AnycubicCameraToken | None: ...
+
+    @overload
+    async def _send_anycubic_camera_open_order(
+        self,
+        printer: AnycubicPrinter,
+        raw_data: bool = False,
+    ) -> AnycubicCameraToken | None | dict[str, Any]: ...
+
     async def _send_anycubic_camera_open_order(
         self,
         printer: AnycubicPrinter,
