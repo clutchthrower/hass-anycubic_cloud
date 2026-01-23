@@ -31,7 +31,109 @@ If you find updates for any sensors are only received every minute, please open 
 
 ## Frontend Card
 
-This integration couples with my [Anycubic card for Home Assistant](https://github.com/WaresWichall/hass-anycubic_card)
+This integration ships with a Lovelace card (`anycubic-card`) for dashboards.
+In most installs (Lovelace storage mode), the integration auto-registers the
+resource so the card shows up in the card picker with a GUI editor. If you are
+using YAML mode, add the resource manually:
+
+```yaml
+resources:
+  - url: /anycubic-card-static
+    type: module
+```
+
+### Card configuration (YAML)
+
+```yaml
+type: anycubic-card
+printer_id: <device_id>
+```
+
+### Card options
+
+- `printer_id` (required): Home Assistant device ID for the printer. Use the GUI editor to pick it.
+- `vertical` (default `false`): Vertical layout.
+- `round` (default `false`): Rounded corners style.
+- `use_24hr` (default `true`): 24-hour time format.
+- `temperatureUnit` (default `C`): `C` or `F`.
+- `lightEntityId`: Light entity for the printer light (domain `light`).
+- `powerEntityId`: Switch entity for printer power (domain `switch`).
+- `cameraEntityId`: Camera entity for live view (domain `camera`).
+- `monitoredStats`: List of stats to display (see below).
+- `scaleFactor` (default `1`): `1`, `0.75`, or `0.5`.
+- `slotColors` (default `[]`): List of color presets (hex strings) for ACE spools.
+- `showSettingsButton` (default `false`): Always show the settings button.
+- `alwaysShow` (default `false`): Keep the card visible even when not printing.
+
+### Available `monitoredStats`
+
+General:
+- `Status`
+- `ETA`
+- `Elapsed`
+- `Remaining`
+- `Online`
+- `Availability`
+- `Project`
+- `Layer`
+
+FDM-only:
+- `Hotend`
+- `Bed`
+- `T Hotend`
+- `T Bed`
+- `Speed Mode`
+- `Fan Speed`
+
+ACE (color box):
+- `Dry Status`
+- `Dry Time`
+
+LCD (resin):
+- `On Time`
+- `Off Time`
+- `Bottom Time`
+- `Model Height`
+- `Bottom Layers`
+- `Z Up Height`
+- `Z Up Speed`
+- `Z Down Speed`
+
+### Example
+
+```yaml
+type: anycubic-card
+printer_id: 1234567890abcdef
+vertical: true
+round: true
+use_24hr: false
+temperatureUnit: F
+lightEntityId: light.printer_light
+powerEntityId: switch.printer_power
+cameraEntityId: camera.printer_cam
+scaleFactor: 0.75
+showSettingsButton: true
+alwaysShow: true
+slotColors:
+  - "#ff0000"
+  - "#00ff00"
+  - "#0000ff"
+monitoredStats:
+  - Status
+  - ETA
+  - Elapsed
+  - Remaining
+  - Online
+  - Availability
+  - Project
+  - Layer
+  - Hotend
+  - Bed
+  - T Hotend
+  - T Bed
+  - Speed Mode
+  - Fan Speed
+```
 
 
 ## Gallery
