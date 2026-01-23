@@ -5,6 +5,7 @@ import os
 from typing import Any
 
 from homeassistant.components import frontend, panel_custom
+from homeassistant.components.http import StaticPathConfig
 from homeassistant.components.lovelace.const import (
     CONF_RESOURCE_TYPE_WS,
     CONF_URL,
@@ -12,7 +13,6 @@ from homeassistant.components.lovelace.const import (
     MODE_STORAGE,
 )
 from homeassistant.components.lovelace.resources import ResourceStorageCollection
-from homeassistant.components.http import StaticPathConfig
 from homeassistant.core import HomeAssistant
 
 from .const import (
