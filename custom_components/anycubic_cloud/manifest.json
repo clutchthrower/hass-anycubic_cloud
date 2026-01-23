@@ -12,7 +12,7 @@
     "panel_custom",
     "stream"
   ],
-  "documentation": "https://www.home-assistant.io/integrations/anycubic_cloud",
+  "documentation": "https://github.com/clutchthrower/hass-anycubic_cloud/blob/master/README.md",
   "iot_class": "cloud_polling",
   "issue_tracker": "https://github.com/WaresWichall/anycubic_cloud/issues",
   "loggers": ["anycubic_cloud"],
