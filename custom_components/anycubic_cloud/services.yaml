@@ -86,9 +86,6 @@ multi_color_box_filament_retract:
     printer_id: *printer_id
     box_id: *box_id
 print_and_upload_save_in_cloud:
-  target: &anycubic_device_target
-    device:
-      integration: anycubic_cloud
   fields:
     config_entry: *anycubic_config_entry
     device_id: *device_id
@@ -104,7 +101,6 @@ print_and_upload_save_in_cloud:
         file:
           accept: ".gcode"
 print_and_upload_no_cloud_save:
-  target: *anycubic_device_target
   fields:
     config_entry: *anycubic_config_entry
     device_id: *device_id
